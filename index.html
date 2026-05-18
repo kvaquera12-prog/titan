@@ -179,16 +179,15 @@ overflow-x:hidden;
 
 header{
  background:#131921;
-  color:white;
-   padding:15px;
-    display:flex;
-     justify-content:space-between;
-    align-items:center;
-   gap:15px;
-  flex-wrap:wrap;
+ color:white;
+ padding:15px;
+ display:grid;
+ grid-template-columns:auto 1fr auto;
+ align-items:center;
+ gap:20px;
  position:sticky;
-top:0;
-z-index:1000;
+ top:0;
+ z-index:1000;
 }
 
 header h1{
@@ -221,27 +220,48 @@ input[type="search"]{
 font-size:16px;
 }
 
+.barra-busqueda{
+ width:430px;
+ min-width:260px;
+ display:flex;
+ align-items:center;
+ gap:8px;
+ position:relative;
+}
+
 .btn-menu{
  font-size:28px;
-  background:none;
-   border:none;
-    color:white;
-   cursor:pointer;
-  width:auto;
- padding:5px 10px;
-margin:0;
+ background:#131921;
+ color:white;
+ border:none;
+ border-radius:25px;
+ cursor:pointer;
+ width:auto;
+ padding:7px 14px;
+ margin:0;
+} 
+
+.btn-menu:hover{
+ background:#232f3e;
+ color:white;
 }
+
+.btn-menu:active{
+ background:#2f3f52;
+ color:white;
+}
+
 
 .menu{
  position:fixed;
-  top:0;
-   right:-250px;
-     width:250px;
-    height:100%;
-   background:#131921;
-  padding-top:20px;
+ top:0;
+ left:-250px;
+ width:250px;
+ height:100%;
+ background:#131921;
+ padding-top:20px;
  transition:0.4s;
-z-index:3000;
+ z-index:3000;
 }
 
 .menu a{
@@ -333,10 +353,15 @@ button{
 transition:0.3s;
 }
 
-button:hover{
-background:#ff9900;
+.btn-categorias:hover{
+ background:#232f3e;
+ color:white;
+ border-color:white;
 }
-
+.btn-categorias:active{
+ background:#2f3f52;
+ color:white;
+}
 .carrito-flotante{
  position:fixed;
  bottom:20px;
@@ -495,8 +520,105 @@ border-radius:10px;
 box-shadow:0 0 20px black;
 }
 
+
+.barra-busqueda input[type="search"]{
+ flex:1;
+ max-width:360px;
+}
+
+.categorias-dropdown{
+ position:relative;
+ width:auto;
+}
+
+.btn-categorias{
+ width:auto;
+ margin:0;
+ padding:12px 18px;
+ border-radius:25px;
+ background:#131921;
+ color:white;
+ border:2px solid white;
+ white-space:nowrap;
+}
+
+.lista-categorias{
+ position:absolute;
+ top:calc(100% + 8px);
+ right:0;
+ width:190px;
+ max-height:320px;
+ background:#ffffff;
+ border-radius:10px;
+ box-shadow:0 8px 20px rgba(0,0,0,0.25);
+ overflow-y:auto;
+ overflow-x:hidden;
+ opacity:0;
+ transform:translateY(-8px);
+ pointer-events:none;
+ transition:opacity 0.25s ease, transform 0.25s ease;
+ z-index:2500;
+}
+
+.lista-categorias.abierta{
+ opacity:1;
+ transform:translateY(0);
+ pointer-events:auto;
+}
+
+.lista-categorias button{
+ width:100%;
+ margin:0;
+ border-radius:0;
+ background:#131921;
+ color:white;
+ text-align:left;
+ padding:13px 15px;
+}
+
+.lista-categorias button:hover{
+ background:#232f3e;
+ color:white;
+}
+
+.lista-categorias button:active{
+ background:#2f3f52;
+ color:white;
+}
+.btn-menu{
+ grid-column:1;
+}
+
+header h1{
+ grid-column:2;
+ justify-self:center;
+ transform:skew(-3deg);
+}
+
+.barra-busqueda{
+ grid-column:3;
+ justify-self:end;
+ margin-right:20px;
+}
+
 /* CELULAR */
 @media(max-width:600px){
+
+  .barra-busqueda{
+ grid-column:1 / 3;
+ width:100%;
+ min-width:0;
+}
+
+.btn-categorias{
+ padding:10px 12px;
+ font-size:13px;
+}
+
+.lista-categorias{
+ right:0;
+ width:155px;
+}
 
   .products .product{
  max-width:none;
@@ -505,11 +627,12 @@ box-shadow:0 0 20px black;
 
 header{
  display:grid;
-  grid-template-columns:1fr auto;
-   align-items:center;
-  gap:8px;
+ grid-template-columns:auto 1fr;
+ align-items:center;
+ gap:8px;
  padding:10px;
 }
+
 
 header h1{
  font-size:20px;
@@ -530,19 +653,36 @@ input[type="search"]{
 }
 
 .btn-menu{
- grid-column:2;
-  grid-row:1;
-   justify-self:end;
-    align-self:center;
-     font-size:26px;
-    width:45px;
-   height:45px;
-  padding:0;
+ grid-column:1;
+ grid-row:1;
+ justify-self:start;
+ align-self:center;
+ font-size:24px;
+ width:45px;
+ height:45px;
+ padding:0;
  margin:0;
+ border:none;
+ border-radius:50%;
+}
+
+header h1{
+ grid-column:2;
+ grid-row:1;
+ transform:skew(-3deg);
+ justify-self:start;
+ font-size:18px;
+ letter-spacing:2px;
+ gap:8px;
+}
+
+header h1 img{
+ width:42px;
+ height:42px;
 }
 
 .menu{
-right:-250px;
+left:-250px;
 width:250px;
 }
 
@@ -605,20 +745,46 @@ border-radius:18px;
 </div>
 
 <header>
+
+<button class="btn-menu" onclick="abrirMenu()">☰</button>
+
 <h1>
   <img src="imagenes/logo2.png" alt="TITAN MOTORS logo">
   TITAN MOTORS
 </h1>
 
-
-<form onsubmit="return false;">
-<input 
- type="search" 
+<form class="barra-busqueda" onsubmit="return false;">
+ <input 
+  type="search" 
   placeholder="🔎 Buscar productos..."
-   aria-label="Buscar productos">
+  aria-label="Buscar productos">
+
+ <div class="categorias-dropdown">
+  <button type="button" class="btn-categorias" onclick="toggleCategorias()">Categorías</button>
+
+  <div id="listaCategorias" class="lista-categorias">
+   <button type="button" onclick="filtrarCategoria('aceite')">🛢️ Aceite</button>
+    <button type="button" onclick="filtrarCategoria('Filtro de Aire')">🎒 filtro de aire</button>
+    <button type="button" onclick="filtrarCategoria('Carburador')">🪖 Carburadores</button>
+    <button type="button" onclick="filtrarCategoria('Empaque')">🧰 Empaques</button>
+    <button type="button" onclick="filtrarCategoria('Bateria')">⚡ Baterias</button>
+    <button type="button" onclick="filtrarCategoria('Rodamiento')">🔩 Rodamientos</button>
+    <button type="button" onclick="filtrarCategoria('Distribucion')">🔧 Distribución</button>
+    <button type="button" onclick="filtrarCategoria('Transmision')">🧥 Transmisión</button>
+    <button type="button" onclick="filtrarCategoria('Chicotillo')">🔌 Chicotillo</button>
+    <button type="button" onclick="filtrarCategoria('Embrague')">🧰 Embragues</button>
+    <button type="button" onclick="filtrarCategoria('Valvula')">🛞 Valvulas</button>
+    <button type="button" onclick="filtrarCategoria('Frenos')">🛑 Frenos</button>
+    <button type="button" onclick="filtrarCategoria('Suspensiones')">🛠 Suspensiones</button>
+    <button type="button" onclick="filtrarCategoria('Bujia')">🛞 Bujias y capuchones</button>
+    <button type="button" onclick="filtrarCategoria('Luces')">💡 Luces</button>
+    <button type="button" onclick="filtrarCategoria('Cilindro')">🏍 Cilindros</button>
+   <button type="button" onclick="filtrarCategoria('Biela')">🔧 Bielas</button>
+   <button type="button" onclick="filtrarCategoria('todos')">Ver todo</button>
+  </div>
+ </div>
 </form>
 
-<button class="btn-menu" onclick="abrirMenu()">☰</button>
 
 <div id="menuLateral" class="menu">
 
@@ -636,13 +802,7 @@ border-radius:18px;
  <a href="#">⭐ Ofertas</a>
 </div>
 
-<a href="#" onclick="toggleMenu('productosMenu')"> Repuestos</a>
- <div id="productosMenu" class="submenu">
- <a href="#" onclick="filtrarCategoria('aceite')">🛢️ Aceite</a>
-<a href="#" onclick="filtrarCategoria('motos')">🏍 Motos</a>
-<a href="#" onclick="filtrarCategoria('repuestos')">🔧 Repuestos</a>
-<a href="#" onclick="filtrarCategoria('todos')">Ver todo</a>
-</div>
+
 
 <a href="#" onclick="toggleMenu('carritoMenu')">Carrito</a>
  <div id="carritoMenu" class="submenu">
@@ -678,7 +838,7 @@ border-radius:18px;
 
 <div class="products">
 
-<div class="product" data-categoria="repuestos">
+<div class="product" data-categoria="Transmision">
  <img src="imagenes/imagen-cadena.jpg" onclick="verImagen(this)">
   <h3>Kit de transmicion competicion</h3>
    <p>Cg 15T 41T</p>
@@ -700,7 +860,7 @@ border-radius:18px;
 </div>
 </div>
 
-<div class="product" data-categoria="repuestos">
+<div class="product" data-categoria="Filtro de Aire">
  <img src="imagenes/filtro-honda-cg-new150.jpg" onclick="verImagen(this)">
   <h3>Filtro De Aire Br </h3>
    <p>Filtro de Aire Honda cg new titan</p>
@@ -711,7 +871,7 @@ border-radius:18px;
  </div>
 </div>
 
-<div class="product" data-categoria="repuestos">
+<div class="product" data-categoria="Filtro de Aire">
  <img src="imagenes/filtro-aire-xr150.jpg" onclick="verImagen(this)">
   <h3>Filtro De Aire Br </h3>
    <p>Filtro de Aire Honda xr150 </p>
@@ -722,7 +882,7 @@ border-radius:18px;
  </div>
 </div>
 
-<div class="product" data-categoria="repuestos">
+<div class="product" data-categoria="Filtro de Aire">
  <img src="imagenes/filtro-aire-chino-150.jpg" onclick="verImagen(this)">
   <h3>Filtro De Aire </h3>
    <p>Filtro de Aire Titan chino y brasil</p>
@@ -733,7 +893,7 @@ border-radius:18px;
  </div>
 </div>
 
-<div class="product" data-categoria="repuestos">
+<div class="product" data-categoria="Filtro de Aire">
  <img src="imagenes/filtro-honda-navi.jpg" onclick="verImagen(this)">
   <h3>Filtro De Aire Br</h3>
    <p>Filtro de Aire Honda Navi</p>
@@ -744,7 +904,7 @@ border-radius:18px;
  </div>
 </div>
 
-<div class="product" data-categoria="repuestos">
+<div class="product" data-categoria="Filtro de Aire">
  <img src="imagenes/filtro-aire-hero-eco150.jpg" onclick="verImagen(this)">
   <h3>Filtro De Aire Br</h3>
    <p>Filtro de Aire Hero eco 150cc</p>
@@ -755,7 +915,7 @@ border-radius:18px;
  </div>
 </div>
 
-<div class="product" data-categoria="repuestos">
+<div class="product" data-categoria="Carburador">
  <img src="imagenes/carburador-pz26.jpg" onclick="verImagen(this)">
   <h3>Carburador PZ30</h3>
    <p>Carburador PZ30 chino 200/250cc</p>
@@ -766,7 +926,7 @@ border-radius:18px;
  </div>
 </div>
 
-<div class="product" data-categoria="repuestos">
+<div class="product" data-categoria="Carburador">
  <img src="imagenes/Carburetor-PZ26.jpg" onclick="verImagen(this)">
   <h3>Carburador PZ26</h3>
    <p>Carburador PZ26 chino 125/150cc</p>
@@ -777,7 +937,7 @@ border-radius:18px;
  </div>
 </div>
 
-<div class="product" data-categoria="repuestos">
+<div class="product" data-categoria="Carburador">
  <img src="imagenes/carburador-pz27.jpg" onclick="verImagen(this)">
   <h3>Carburador PZ27</h3>
    <p>Carburador PZ27 chino 150/200cc</p>
@@ -788,7 +948,7 @@ border-radius:18px;
  </div>
 </div>
 
-<div class="product" data-categoria="repuestos">
+<div class="product" data-categoria="Carburador">
  <img src="imagenes/carburador-honda-cgtitan150cc.jpg" onclick="verImagen(this)">
   <h3>Carburador Honda 150cc Br</h3>
    <p>Carburador honda cg titan 150cc </p>
@@ -799,7 +959,7 @@ border-radius:18px;
  </div>
 </div>
 
-<div class="product" data-categoria="repuestos">
+<div class="product" data-categoria="Carburador">
  <img src="imagenes/carburador-hondaxr150.jpg" onclick="verImagen(this)">
   <h3>Carburador Honda 150cc Br</h3>
    <p>Carburador honda xr150cc </p>
@@ -810,7 +970,7 @@ border-radius:18px;
  </div>
 </div>
 
-<div class="product" data-categoria="repuestos">
+<div class="product" data-categoria="Carburador">
  <img src="imagenes/carburador-hero-eco150.jpg" onclick="verImagen(this)">
   <h3>Carburador Hero Br</h3>
    <p>Carburador hero eco 150cc 2024 </p>
@@ -821,7 +981,7 @@ border-radius:18px;
  </div>
 </div>
 
-<div class="product" data-categoria="repuestos">
+<div class="product" data-categoria="Carburador">
  <img src="imagenes/carburador-32mm-carreras.jpg" onclick="verImagen(this)">
   <h3>Carburador Modificado</h3>
    <p>Carburador Para carreras 32mm </p>
@@ -843,7 +1003,7 @@ border-radius:18px;
  </div>
 </div>
 
-<div class="product" data-categoria="repuestos">
+<div class="product" data-categoria="Chicotillo">
  <img src="imagenes/chicotillo-de-embrague-150-titan.jpg" onclick="verImagen(this)">
   <h3>Chicotillo De Embrague Br</h3>
    <p>Chicotillo de Embrague honda cg 150cc </p>
@@ -854,7 +1014,7 @@ border-radius:18px;
  </div>
 </div>
 
-<div class="product" data-categoria="repuestos">
+<div class="product" data-categoria="Chicotillo">
  <img src="imagenes/chicotillo-aceleracion-150hondacgantigua.jpg" onclick="verImagen(this)">
   <h3>Chicotillo De Aceleracion Br</h3>
    <p>Chicotillo de Aceleracion honda cg 150cc titan ESD 2004/2009 </p>
@@ -865,7 +1025,7 @@ border-radius:18px;
  </div>
 </div>
 
-<div class="product" data-categoria="repuestos">
+<div class="product" data-categoria="Chicotillo">
  <img src="imagenes/chicotillo-aceleracion-hondatitannew.jpg" onclick="verImagen(this)">
   <h3>Chicotillo De Aceleracion Br</h3>
    <p>Chicotillo de Aceleracion honda cg 150cc titan new </p>
@@ -876,7 +1036,7 @@ border-radius:18px;
  </div>
 </div>
 
-<div class="product" data-categoria="repuestos">
+<div class="product" data-categoria="Chicotillo">
  <img src="imagenes/chicotillo-honda-wave110.jpg" onclick="verImagen(this)">
   <h3>Chicotillo De Aceleracion Br</h3>
    <p>Chicotillo de Aceleracion honda wave 110cc</p>
@@ -887,7 +1047,7 @@ border-radius:18px;
  </div>
 </div>
 
-<div class="product" data-categoria="repuestos">
+<div class="product" data-categoria="Chicotillo">
  <img src="imagenes/chicotillo-chino-cg,cgl.jpg" onclick="verImagen(this)">
   <h3>Chicotillo De Embrague Ch</h3>
    <p>Chicotillo de Embrague chino cg,cgl</p>
@@ -898,7 +1058,7 @@ border-radius:18px;
  </div>
 </div>
 
-<div class="product" data-categoria="repuestos">
+<div class="product" data-categoria="Chicotillo">
  <img src="imagenes/chicotillo-embrague-brozz.jpg" onclick="verImagen(this)">
   <h3>Chicotillo De Embrague Ch</h3>
    <p>Chicotillo de Embrague chino brozz,xr</p>
@@ -910,7 +1070,7 @@ border-radius:18px;
 </div>
 
 
-<div class="product" data-categoria="repuestos">
+<div class="product" data-categoria="Bujia">
  <img src="imagenes/capuchon-de-bujia-cg,xr-150.jpg" onclick="verImagen(this)">
   <h3>Capuchon De Bujia</h3>
    <p>Capuchon de bujia honda cg,xr150</p>
@@ -921,7 +1081,7 @@ border-radius:18px;
  </div>
 </div>
 
-<div class="product" data-categoria="repuestos">
+<div class="product" data-categoria="Bujia">
  <img src="imagenes/capuchon-universal.jpg" onclick="verImagen(this)">
   <h3>Capuchon De Bujia</h3>
    <p>Capuchon de bujia universal chino</p>
@@ -932,7 +1092,7 @@ border-radius:18px;
  </div>
 </div>
 
-<div class="product" data-categoria="repuestos">
+<div class="product" data-categoria="Bujia">
  <img src="imagenes/bujia-honda-cg 150-hero-eco.jpg" onclick="verImagen(this)">
   <h3>Bujia NGK</h3>
    <p>Bujia NGK honda cg,eco CPR8EA-9</p>
@@ -943,7 +1103,7 @@ border-radius:18px;
  </div>
 </div>
 
-<div class="product" data-categoria="repuestos">
+<div class="product" data-categoria="Bujia">
  <img src="imagenes/bujia-para-moto china-cg.jpg" onclick="verImagen(this)">
   <h3>Bujia NGK</h3>
    <p>Bujia NGK China cg CPR8EA-9</p>
@@ -954,7 +1114,7 @@ border-radius:18px;
  </div>
 </div>
 
-<div class="product" data-categoria="repuestos">
+<div class="product" data-categoria="Bujia">
  <img src="imagenes/bujia-bizz.jpg" onclick="verImagen(this)">
   <h3>Bujia NGK</h3>
    <p>Bujia NGK bizz CR8E</p>
@@ -965,7 +1125,7 @@ border-radius:18px;
  </div>
 </div>
 
-<div class="product" data-categoria="repuestos">
+<div class="product" data-categoria="Bujia">
  <img src="imagenes/bujia-cg-china.jpg" onclick="verImagen(this)">
   <h3>Bujia NGK</h3>
    <p>Bujia NGK Cg china D8EA</p>
@@ -976,7 +1136,7 @@ border-radius:18px;
  </div>
 </div>
 
-<div class="product" data-categoria="repuestos">
+<div class="product" data-categoria="Rodamiento">
  <img src="imagenes/rodamiento-6302.jpg" onclick="verImagen(this)">
   <h3>Rodamiento De Aro</h3>
    <p>Rodamiento de aro 6302 koyo</p>
@@ -987,7 +1147,7 @@ border-radius:18px;
  </div>
 </div>
 
-<div class="product" data-categoria="repuestos">
+<div class="product" data-categoria="Rodamiento">
  <img src="imagenes/rodamiento-6202-aro.jpg" onclick="verImagen(this)">
   <h3>Rodamiento De Aro</h3>
    <p>Rodamiento de aro 6202 koyo</p>
@@ -998,7 +1158,7 @@ border-radius:18px;
  </div>
 </div>
 
-<div class="product" data-categoria="repuestos">
+<div class="product" data-categoria="Rodamiento">
  <img src="imagenes/rodamiento-6203.jpg" onclick="verImagen(this)">
   <h3>Rodamiento De Aro</h3>
    <p>Rodamiento de aro 6203 koyo</p>
@@ -1009,7 +1169,7 @@ border-radius:18px;
  </div>
 </div>
 
-<div class="product" data-categoria="repuestos">
+<div class="product" data-categoria="Rodamiento">
  <img src="imagenes/rodamiento-direccion-honda-cg-titan-150.jpg" onclick="verImagen(this)">
   <h3>Rodamiento De Direccion</h3>
    <p>Rodamiento de direccion honda cg 150</p>
@@ -1020,7 +1180,7 @@ border-radius:18px;
  </div>
 </div>
 
-<div class="product" data-categoria="repuestos">
+<div class="product" data-categoria="Rodamiento">
  <img src="imagenes/rodamiento-cigueñal-honda-cg-titan-150.jpg" onclick="verImagen(this)">
   <h3>Rodamiento De Motor</h3>
    <p>Rodamiento de Cigueñal Honda Cg,titan 30x58x17 Br.</p>
@@ -1031,7 +1191,7 @@ border-radius:18px;
  </div>
 </div>
 
-<div class="product" data-categoria="repuestos">
+<div class="product" data-categoria="Frenos">
  <img src="imagenes/pastilla-motochina.jpg" onclick="verImagen(this)">
   <h3>Juego de pastilla de freno</h3>
    <p>Pastilla de freno para moto china rusi</p>
@@ -1042,7 +1202,7 @@ border-radius:18px;
  </div>
 </div>
 
-<div class="product" data-categoria="repuestos">
+<div class="product" data-categoria="Frenos">
  <img src="imagenes/pastilla-de-honda-cg150.jpg" onclick="verImagen(this)">
   <h3>Juego de pastilla de freno</h3>
    <p>Pastilla de freno para Cg Honda titan 150</p>
@@ -1053,7 +1213,7 @@ border-radius:18px;
  </div>
 </div>
 
-<div class="product" data-categoria="repuestos">
+<div class="product" data-categoria="Frenos">
  <img src="imagenes/brozchina.jpg" onclick="verImagen(this)">
   <h3>Juego de pastilla de freno</h3>
    <p>Pastilla de freno para moto china brozz</p>
@@ -1064,7 +1224,7 @@ border-radius:18px;
  </div>
 </div>
 
-<div class="product" data-categoria="repuestos">
+<div class="product" data-categoria="Frenos">
  <img src="imagenes/pastilla-tekken.jpg" onclick="verImagen(this)">
   <h3>Juego de pastilla de freno</h3>
    <p>Pastilla de freno para Tekken china</p>
@@ -1075,7 +1235,7 @@ border-radius:18px;
  </div>
 </div>
 
-<div class="product" data-categoria="repuestos">
+<div class="product" data-categoria="Distribucion">
  <img src="imagenes/distribucion-china110cc.jpg" onclick="verImagen(this)">
   <h3>Kit de distribucion china</h3>
    <p>kit distribucion cadenilla China 110cc</p>
@@ -1086,7 +1246,7 @@ border-radius:18px;
  </div>
 </div>
 
-<div class="product" data-categoria="repuestos">
+<div class="product" data-categoria="Distribucion">
  <img src="imagenes/kit-cadenilla-honda-cb125.jpg" onclick="verImagen(this)">
   <h3>Kit de distribucion Honda br</h3>
    <p>kit distribucion cadenilla honda cb125</p>
@@ -1097,7 +1257,7 @@ border-radius:18px;
  </div>
 </div>
 
-<div class="product" data-categoria="repuestos">
+<div class="product" data-categoria="Distribucion">
  <img src="imagenes/guiador-cadenilla-honda150.jpg" onclick="verImagen(this)">
   <h3>Kit Honda 150cc Br</h3>
    <p>kit guiador de cadenilla Brazil 150cc hero eco,titan,xr 150cc</p>
@@ -1108,7 +1268,7 @@ border-radius:18px;
  </div>
 </div>
 
-<div class="product" data-categoria="repuestos">
+<div class="product" data-categoria="Distribucion">
  <img src="imagenes/cadenilla-honda-150-br.jpg" onclick="verImagen(this)">
   <h3>Cadenilla Honda 150cc Br</h3>
    <p>Cadenilla Brazil 150cc hero eco,titan,xr 150cc</p>
@@ -1130,7 +1290,7 @@ border-radius:18px;
  </div>
 </div>
 
-<div class="product" data-categoria="repuestos">
+<div class="product" data-categoria="transmision">
  <img src="imagenes/cadena-china.jpg" onclick="verImagen(this)">
   <h3>Kit de transmicion china 150/200</h3>
    <p>Cg China 15T 41T</p>
@@ -1141,7 +1301,7 @@ border-radius:18px;
  </div>
 </div>
 
-<div class="product" data-categoria="repuestos">
+<div class="product" data-categoria="transmision">
  <img src="imagenes/rifel.jpg" onclick="verImagen(this)">
   <h3>Kit de transmicion Riffel B.</h3>
    <p>Honda Cg Titan 150 Brasil</p>
@@ -1152,7 +1312,7 @@ border-radius:18px;
  </div>
 </div>
 
-<div class="product" data-categoria="repuestos">
+<div class="product" data-categoria="transmision">
  <img src="imagenes/transmicion-honda-tornado.jpg" onclick="verImagen(this)">
   <h3>Kit de transmicion Riffel B.</h3>
    <p>Honda Tornado Brasil</p>
@@ -1163,7 +1323,7 @@ border-radius:18px;
  </div>
 </div>
 
-<div class="product" data-categoria="repuestos">
+<div class="product" data-categoria="transmision">
  <img src="imagenes/transmicion-honda-twuister-125.jpg" onclick="verImagen(this)">
   <h3>Kit de transmicion Riffel B.</h3>
    <p>Honda Twuister 125 Brasil</p>
@@ -1174,7 +1334,7 @@ border-radius:18px;
  </div>
 </div>
 
-<div class="product" data-categoria="repuestos">
+<div class="product" data-categoria="transmision">
  <img src="imagenes/transmicion-honda-wave110.jpg" onclick="verImagen(this)">
   <h3>Kit de transmicion Riffel B.</h3>
    <p>Honda Wave 110 Brasil</p>
@@ -1185,7 +1345,7 @@ border-radius:18px;
  </div>
 </div>
 
-<div class="product" data-categoria="repuestos">
+<div class="product" data-categoria="transmision">
  <img src="imagenes/transmicion-cb1.jpg" onclick="verImagen(this)">
   <h3>Kit de transmicion Riffel B.</h3>
    <p>Honda Cb1 Brasil</p>
@@ -1196,7 +1356,7 @@ border-radius:18px;
  </div>
 </div>
 
-<div class="product" data-categoria="repuestos">
+<div class="product" data-categoria="Bateria">
  <img src="imagenes/bateria-honda-cb1.jpg" onclick="verImagen(this)">
   <h3>Bateria de honda Br.</h3>
    <p>Bateria Honda Cb1 Brasil</p>
@@ -1207,7 +1367,7 @@ border-radius:18px;
  </div>
 </div>
 
-<div class="product" data-categoria="repuestos">
+<div class="product" data-categoria="Bateria">
  <img src="imagenes/bateria-honda-twister125.jpg" onclick="verImagen(this)">
   <h3>Bateria de honda Br.</h3>
    <p>Bateria Honda twister Cb125 Brasil</p>
@@ -1218,7 +1378,7 @@ border-radius:18px;
  </div>
 </div>
 
-<div class="product" data-categoria="repuestos">
+<div class="product" data-categoria="Bateria">
  <img src="imagenes/bateria-honda-cgtitan150.jpg" onclick="verImagen(this)">
   <h3>Bateria de honda Br.</h3>
    <p>Bateria Honda cg titan 150 Brasil</p>
@@ -1229,7 +1389,7 @@ border-radius:18px;
  </div>
 </div>
 
-<div class="product" data-categoria="repuestos">
+<div class="product" data-categoria="Bateria">
  <img src="imagenes/bateria-bizz-china135.jpg" onclick="verImagen(this)">
   <h3>Bateria de Tornado Ch..</h3>
    <p>Bateria Tornado bizz china </p>
@@ -1240,7 +1400,7 @@ border-radius:18px;
  </div>
 </div>
 
-<div class="product" data-categoria="repuestos">
+<div class="product" data-categoria="Bateria">
  <img src="imagenes/bateria-hero-eco150.jpg" onclick="verImagen(this)">
   <h3>Bateria de Hero eco.</h3>
    <p>Bateria Hero eco 150cc </p>
@@ -1251,7 +1411,7 @@ border-radius:18px;
  </div>
 </div>
 
-<div class="product" data-categoria="repuestos">
+<div class="product" data-categoria="Bateria">
  <img src="imagenes/bateria-hero-xpulse200.jpg" onclick="verImagen(this)">
   <h3>Bateria de Hero xpulse.</h3>
    <p>Bateria Hero xpulse 200cc </p>
@@ -1262,7 +1422,7 @@ border-radius:18px;
  </div>
 </div>
 
-<div class="product" data-categoria="repuestos">
+<div class="product" data-categoria="Bateria">
  <img src="imagenes/beteria-boxer150.jpg" onclick="verImagen(this)">
   <h3>Bateria de Bajaj.</h3>
    <p>Bateria Bajaj Boxer 150cc </p>
@@ -1273,7 +1433,7 @@ border-radius:18px;
  </div>
 </div>
 
-<div class="product" data-categoria="repuestos">
+<div class="product" data-categoria="Embrague">
  <img src="imagenes/discos-de-embrague-5discos-br.jpg" onclick="verImagen(this)">
   <h3>Kit de Discos Br.</h3>
    <p>kit de discos de embrague 5 discos 150cc brazil</p>
@@ -1284,7 +1444,7 @@ border-radius:18px;
  </div>
 </div>
 
-<div class="product" data-categoria="repuestos">
+<div class="product" data-categoria="Embrague">
  <img src="imagenes/discos-de-embrague-6.jpg" onclick="verImagen(this)">
   <h3>Kit de Discos Ch.</h3>
    <p>kit de discos de embrague 6 discos 200/250cc chino</p>
@@ -1295,7 +1455,7 @@ border-radius:18px;
  </div>
 </div>
 
-<div class="product" data-categoria="repuestos">
+<div class="product" data-categoria="Embrague">
  <img src="imagenes/discos-de-embrague-chino.jpg" onclick="verImagen(this)">
   <h3>Kit de Discos Ch.</h3>
    <p>kit de discos de embrague 5 discos 150cc chino</p>
@@ -1306,7 +1466,7 @@ border-radius:18px;
  </div>
 </div>
 
-<div class="product" data-categoria="repuestos">
+<div class="product" data-categoria="Embrague">
  <img src="imagenes/discos-de-embrague-4bizz.jpg" onclick="verImagen(this)">
   <h3>Kit de Discos Ch.</h3>
    <p>kit de discos de embrague 4 discos bizz chino</p>
@@ -1317,7 +1477,7 @@ border-radius:18px;
  </div>
 </div>
 
-<div class="product" data-categoria="repuestos">
+<div class="product" data-categoria="Empaque">
  <img src="imagenes/juego-de-empaque-150-honda-cg-titan.jpg" onclick="verImagen(this)">
   <h3>Empaque completo Br.</h3>
    <p>Honda 150cc Cg,Xr</p>
@@ -1328,7 +1488,7 @@ border-radius:18px;
  </div>
 </div>
 
-<div class="product" data-categoria="repuestos">
+<div class="product" data-categoria="Empaque">
  <img src="imagenes/empaque-honda-wave-br.jpg" onclick="verImagen(this)">
   <h3>Empaque completo Br.</h3>
    <p>Honda Wave</p>
@@ -1339,7 +1499,7 @@ border-radius:18px;
  </div>
 </div>
 
-<div class="product" data-categoria="repuestos">
+<div class="product" data-categoria="Empaque">
  <img src="imagenes/empaque-de-honda-xl200.jpg" onclick="verImagen(this)">
   <h3>Empaque completo Br.</h3>
    <p>Honda 200cc Xl,Xr,Nx</p>
@@ -1350,7 +1510,7 @@ border-radius:18px;
  </div>
 </div>
 
-<div class="product" data-categoria="repuestos">
+<div class="product" data-categoria="Empaque">
  <img src="imagenes/empaque-honda-navi-br.jpg" onclick="verImagen(this)">
   <h3>Empaque completo Br.</h3>
    <p>Honda Navi</p>
@@ -1361,7 +1521,7 @@ border-radius:18px;
  </div>
 </div>
 
-<div class="product" data-categoria="repuestos">
+<div class="product" data-categoria="Empaque">
  <img src="imagenes/empaque-cb1-twister125.jpg" onclick="verImagen(this)">
   <h3>Empaque completo Br.</h3>
    <p>Honda 125cc Cb1,Twister</p>
@@ -1372,7 +1532,7 @@ border-radius:18px;
  </div>
 </div>
 
-<div class="product" data-categoria="repuestos">
+<div class="product" data-categoria="Empaque">
  <img src="imagenes/empaque-chino-150cc.jpg" onclick="verImagen(this)">
   <h3>Empaque completo Ch.</h3>
    <p>Cg,Cgl 150cc varilla</p>
@@ -1383,7 +1543,7 @@ border-radius:18px;
  </div>
 </div>
 
-<div class="product" data-categoria="repuestos">
+<div class="product" data-categoria="Empaque">
  <img src="imagenes/empaque-chino-200cc-varilla.jpg" onclick="verImagen(this)">
   <h3>Empaque completo Ch.</h3>
    <p>Cg 200cc varilla</p>
@@ -1394,7 +1554,7 @@ border-radius:18px;
  </div>
 </div>
 
-<div class="product" data-categoria="repuestos">
+<div class="product" data-categoria="Empaque">
  <img src="imagenes/empaque-varilla-250cc.jpg" onclick="verImagen(this)">
   <h3>Empaque completo Ch.</h3>
    <p>Cg 250cc varilla</p>
@@ -1405,7 +1565,7 @@ border-radius:18px;
  </div>
 </div>
 
-<div class="product" data-categoria="repuestos">
+<div class="product" data-categoria="Valvula">
  <img src="imagenes/valvulas-chinas-150,200cc.jpg" onclick="verImagen(this)">
   <h3>Kit Valvulas 250cc Ch</h3>
    <p>Kit valvulas 250cc China Kanda,Kingo</p>
@@ -1416,7 +1576,7 @@ border-radius:18px;
  </div>
 </div>
 
-<div class="product" data-categoria="repuestos">
+<div class="product" data-categoria="Valvula">
  <img src="imagenes/valvulas-chinas-150,200cc.jpg" onclick="verImagen(this)">
   <h3>Kit Valvulas 150cc Ch</h3>
    <p>Kit valvulas 150/200cc China Kanda,Kingo</p>
@@ -1427,7 +1587,7 @@ border-radius:18px;
  </div>
 </div>
 
-<div class="product" data-categoria="repuestos">
+<div class="product" data-categoria="Valvula">
  <img src="imagenes/kit-valvulas-150hondacg.jpg" onclick="verImagen(this)">
   <h3>Kit Valvulas 150cc Br</h3>
    <p>Kit valvulas 150cc hero eco titan Brasil</p>
@@ -1438,7 +1598,7 @@ border-radius:18px;
  </div>
 </div>
 
-<div class="product" data-categoria="repuestos">
+<div class="product" data-categoria="Valvula">
  <img src="imagenes/kit-de-valvulas-xr150honda.jpg" onclick="verImagen(this)">
   <h3>Kit Valvulas 150cc Br</h3>
    <p>Kit valvulas 150cc xr honda Brasil</p>
@@ -1449,7 +1609,7 @@ border-radius:18px;
  </div>
 </div>
 
-<div class="product" data-categoria="repuestos">
+<div class="product" data-categoria="Cilindro">
  <img src="imagenes/kit-cilindro150.jpg" onclick="verImagen(this)">
   <h3>Kit Cilindro Honda 150cc</h3>
    <p>Kit cilindro completo 150cc cadenilla Brasil</p>
@@ -1460,7 +1620,7 @@ border-radius:18px;
  </div>
 </div>
 
-<div class="product" data-categoria="repuestos">
+<div class="product" data-categoria="Cilindro">
  <img src="imagenes/kit-mejoradop-150-a-190.jpg" onclick="verImagen(this)">
   <h3>Kit Cilindro Honda 150cc a 190cc</h3>
    <p>Kit cilindro completo 150cc a 190cc cadenilla Brasil</p>
@@ -1471,7 +1631,7 @@ border-radius:18px;
  </div>
 </div>
 
-<div class="product" data-categoria="repuestos">
+<div class="product" data-categoria="Cilindro">
  <img src="imagenes/clindro-chino.jpg" onclick="verImagen(this)">
   <h3>Kit Cilindro Chino 150cc</h3>
    <p>Kit Cilindro completo moto china varillero</p>
@@ -1482,7 +1642,7 @@ border-radius:18px;
  </div>
 </div>
 
-<div class="product" data-categoria="repuestos">
+<div class="product" data-categoria="Cilindro">
  <img src="imagenes/moto-vizz.jpg" onclick="verImagen(this)">
   <h3>Kit Cilindro bizz 125cc</h3>
    <p>Kit Cilindro completo bizz china</p>
@@ -1493,29 +1653,29 @@ border-radius:18px;
  </div>
 </div>
 
-<div class="product" data-categoria="repuestos">
+<div class="product" data-categoria="Biela">
  <img src="imagenes/viela-china.jpg" onclick="verImagen(this)">
-  <h3>Viela china 200cc</h3>
-   <p>Kit repacion de viela moto china 200cc</p>
+  <h3>Biela china 200cc</h3>
+   <p>Kit repacion de Biela moto china 200cc</p>
   <p>Bs 70</p>
  <div class="acciones-producto">
-  <button onclick="addCart('Viela china 200cc',70)">Agregar</button>
+  <button onclick="addCart('Biela china 200cc',70)">Agregar</button>
   <button class="btn-verificar" onclick="abrirDetalle(this)">Verificar</button>
  </div>
 </div>
 
-<div class="product" data-categoria="repuestos">
+<div class="product" data-categoria="Biela">
  <img src="imagenes/viela-china-150.jpg" onclick="verImagen(this)">
-  <h3>Viela china 150cc</h3>
-   <p>Kit reparacion de viela moto china 150cc</p>
+  <h3>Biela china 150cc</h3>
+   <p>Kit reparacion de Biela moto china 150cc</p>
   <p>Bs 70</p>
  <div class="acciones-producto">
-  <button onclick="addCart('Viela china 150cc',70)">Agregar</button>
+  <button onclick="addCart('Biela china 150cc',70)">Agregar</button>
   <button class="btn-verificar" onclick="abrirDetalle(this)">Verificar</button>
  </div>
 </div>
 
-<div class="product" data-categoria="repuestos">
+<div class="product" data-categoria="Biela">
  <img src="imagenes/cigueñal-chino-150cc.jpg" onclick="verImagen(this)">
   <h3>Cigueñal Completo Ch.</h3>
    <p>Cigueñal Varillero 150cc</p>
@@ -1526,7 +1686,7 @@ border-radius:18px;
  </div>
 </div>
 
-<div class="product" data-categoria="repuestos">
+<div class="product" data-categoria="Biela">
  <img src="imagenes/cigueñal200cc.jpg" onclick="verImagen(this)">
   <h3>Cigueñal Completo Ch.</h3>
    <p>Cigueñal Varillero 200cc</p>
@@ -1537,7 +1697,7 @@ border-radius:18px;
  </div>
 </div>
 
-<div class="product" data-categoria="repuestos">
+<div class="product" data-categoria="Biela">
  <img src="imagenes/cigueñal250cc.jpg" onclick="verImagen(this)">
   <h3>Cigueñal Completo Ch.</h3>
    <p>Cigueñal Varillero 250cc</p>
@@ -1548,7 +1708,7 @@ border-radius:18px;
  </div>
 </div>
 
-<div class="product" data-categoria="repuestos">
+<div class="product" data-categoria="Biela">
  <img src="imagenes/cigueñal-honda-cg150.jpg" onclick="verImagen(this)">
   <h3>Cigueñal Completo 150cc Br.</h3>
    <p>Cigueñal Honda Cg,Xr Hero eco 150cc</p>
@@ -1559,7 +1719,7 @@ border-radius:18px;
  </div>
 </div>
 
-<div class="product" data-categoria="repuestos">
+<div class="product" data-categoria="Cilindro">
  <img src="imagenes/kit-piston+25.jpg" onclick="verImagen(this)">
   <h3>Kit Piston 150cc +25</h3>
    <p>Kit reparacion de cilindro honda Cg,Xr 150cc +25</p>
@@ -1570,13 +1730,13 @@ border-radius:18px;
  </div>
 </div>
 
-<div class="product" data-categoria="repuestos">
+<div class="product" data-categoria="Biela">
  <img src="imagenes/kit-viela.jpg" onclick="verImagen(this)">
-  <h3>Viela Honda 150cc</h3>
-   <p>Kit reparacion de viela 150cc Cg,Xr Brasil</p>
+  <h3>Biela Honda 150cc</h3>
+   <p>Kit reparacion de Biela 150cc Cg,Xr Brasil</p>
   <p>Bs 350</p>
  <div class="acciones-producto">
-  <button onclick="addCart('Viela Honda 150cc',350)">Agregar</button>
+  <button onclick="addCart('Biela Honda 150cc',350)">Agregar</button>
   <button class="btn-verificar" onclick="abrirDetalle(this)">Verificar</button>
  </div>
 </div>
@@ -1667,7 +1827,10 @@ border-radius:18px;
 
 <script>
 
-  
+function toggleCategorias(){
+ let lista = document.getElementById("listaCategorias");
+ lista.classList.toggle("abierta");
+}
 
 let cart = JSON.parse(localStorage.getItem("carritoTitanMotors")) || [];
 
@@ -1760,13 +1923,13 @@ menu.style.display = "block";
 }
 
 function abrirMenu(){
-let menu = document.getElementById("menuLateral");
+ let menu = document.getElementById("menuLateral");
 
-if(menu.style.right === "0px"){
-menu.style.right = "-250px";
-}else{
-menu.style.right = "0px";
-}
+ if(menu.style.left === "0px"){
+  menu.style.left = "-250px";
+ }else{
+  menu.style.left = "0px";
+ }
 }
 
 document.addEventListener("click", function(event){
@@ -1776,8 +1939,19 @@ document.addEventListener("click", function(event){
  let carrito = document.getElementById("carrito");
  let botonCarrito = document.querySelector(".carrito-flotante");
 
+ let categorias = document.querySelector(".categorias-dropdown");
+ let listaCategorias = document.getElementById("listaCategorias");
+
+
  if(!menu.contains(event.target) && !botonMenu.contains(event.target)){
-  menu.style.right = "-250px";
+  menu.style.left = "-250px";
+ }
+
+ if(
+  listaCategorias.classList.contains("abierta") &&
+  !categorias.contains(event.target)
+ ){
+  listaCategorias.classList.remove("abierta");
  }
 
  if(
@@ -1826,7 +2000,8 @@ function filtrarCategoria(categoria){
   }
  });
 
- document.getElementById("menuLateral").style.right = "-250px";
+ document.getElementById("menuLateral").style.left = "-250px";
+ document.getElementById("listaCategorias").classList.remove("abierta");
 }
 
 let productoDetalle = "";
@@ -1863,7 +2038,7 @@ function irInicio(){
  });
 
  document.querySelector('input[type="search"]').value = "";
- document.getElementById("menuLateral").style.right = "-250px";
+ document.getElementById("menuLateral").style.left = "-250px";
  window.scrollTo({ top:0, behavior:"smooth" });
 }
 </script>
