@@ -2245,7 +2245,8 @@ border-radius:18px;
   <h2>Panel administrador</h2>
 
   <div id="adminLogin">
-   <input type="password" id="claveAdmin" placeholder="Contraseña de administrador">
+   <input type="email" id="adminEmail" placeholder="Correo administrador">
+<input type="password" id="claveAdmin" placeholder="Contraseña">
    <button onclick="loginAdmin()">Entrar</button>
    <button onclick="cerrarAdmin()">Cancelar</button>
   </div>
@@ -2287,34 +2288,53 @@ border-radius:18px;
  </div>
 </div>
 
-<script>
 
-  const CLAVE_ADMIN = "75172874";
-let productosAdmin = JSON.parse(localStorage.getItem("productosAdminTitan")) || [];
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.15.0/firebase-app.js";
+import { getAuth, signInWithEmailAndPassword, signOut } from "https://www.gstatic.com/firebasejs/12.15.0/firebase-auth.js";
+import { getFirestore, collection, addDoc, deleteDoc, doc, onSnapshot, serverTimestamp } from "https://www.gstatic.com/firebasejs/12.15.0/firebase-firestore.js";
 
-function abrirAdmin(){
+const firebaseConfig = {
+ apiKey: "AIzaSyC3o0GvmQw0bw74VwIRVmV9N6EJsOgJtCc",
+ authDomain: "titanmotors-e3e3c.firebaseapp.com",
+ projectId: "titanmotors-e3e3c",
+ storageBucket: "titanmotors-e3e3c.firebasestorage.app",
+ messagingSenderId: "606393840499",
+ appId: "1:606393840499:web:ee0c9bb93d7e4a548b4b06",
+ measurementId: "G-CLSX311DDH"
+};
+
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db = getFirestore(app);
+
+window.abrirAdmin = function(){
  document.getElementById("panelAdmin").style.display = "flex";
 }
 
-function cerrarAdmin(){
+window.cerrarAdmin = function(){
  document.getElementById("panelAdmin").style.display = "none";
+ document.getElementById("adminEmail").value = "";
  document.getElementById("claveAdmin").value = "";
+ document.getElementById("adminLogin").style.display = "block";
+ document.getElementById("adminZona").style.display = "none";
+ signOut(auth);
 }
 
-function loginAdmin(){
+window.loginAdmin = async function(){
+ let email = document.getElementById("adminEmail").value.trim();
  let clave = document.getElementById("claveAdmin").value;
 
- if(clave !== CLAVE_ADMIN){
-  alert("Contraseña incorrecta");
-  return;
+ try{
+  await signInWithEmailAndPassword(auth, email, clave);
+  document.getElementById("adminLogin").style.display = "none";
+  document.getElementById("adminZona").style.display = "block";
+ }catch(error){
+  alert("Correo o contraseña incorrectos");
  }
-
- document.getElementById("adminLogin").style.display = "none";
- document.getElementById("adminZona").style.display = "block";
- renderListaAdmin();
 }
 
-function guardarProductoAdmin(){
+window.guardarProductoAdmin = function(){
  let nombre = document.getElementById("adminNombre").value.trim();
  let categoria = document.getElementById("adminCategoria").value;
  let descripcion = document.getElementById("adminDescripcion").value.trim();
@@ -2326,42 +2346,46 @@ function guardarProductoAdmin(){
   return;
  }
 
+ if(archivo.size > 500000){
+  alert("La imagen es muy pesada. Usa una imagen menor a 500 KB.");
+  return;
+ }
+
  let lector = new FileReader();
 
- lector.onload = function(){
-  let producto = {
-   id: Date.now(),
-   nombre: nombre,
-   categoria: categoria,
-   descripcion: descripcion,
-   precio: precio,
-   imagen: lector.result
-  };
+ lector.onload = async function(){
+  try{
+   await addDoc(collection(db, "productos"), {
+    nombre: nombre,
+    categoria: categoria,
+    descripcion: descripcion,
+    precio: precio,
+    imagen: lector.result,
+    creado: serverTimestamp()
+   });
 
-  productosAdmin.push(producto);
-  localStorage.setItem("productosAdminTitan", JSON.stringify(productosAdmin));
+   document.getElementById("adminNombre").value = "";
+   document.getElementById("adminDescripcion").value = "";
+   document.getElementById("adminPrecio").value = "";
+   document.getElementById("adminImagen").value = "";
 
-  pintarProductoAdmin(producto);
-  renderListaAdmin();
-
-  document.getElementById("adminNombre").value = "";
-  document.getElementById("adminDescripcion").value = "";
-  document.getElementById("adminPrecio").value = "";
-  document.getElementById("adminImagen").value = "";
-
-  alert("Producto agregado correctamente");
+   alert("Producto agregado correctamente");
+  }catch(error){
+   console.error(error);
+   alert("No se pudo guardar el producto");
+  }
  };
 
  lector.readAsDataURL(archivo);
 }
 
-function pintarProductoAdmin(producto){
+function pintarProductoAdmin(id, producto){
  let contenedor = document.querySelector(".products");
-
  let tarjeta = document.createElement("div");
+
  tarjeta.className = "product producto-admin";
  tarjeta.dataset.categoria = producto.categoria;
- tarjeta.dataset.idAdmin = producto.id;
+ tarjeta.dataset.idAdmin = id;
 
  tarjeta.innerHTML = `
   <img src="${producto.imagen}" onclick="verImagen(this)">
@@ -2377,43 +2401,53 @@ function pintarProductoAdmin(producto){
  contenedor.prepend(tarjeta);
 }
 
-function cargarProductosAdmin(){
- productosAdmin.forEach(function(producto){
-  pintarProductoAdmin(producto);
- });
-}
+window.eliminarProductoAdmin = async function(id){
+ if(!confirm("¿Eliminar este producto?")) return;
 
-function eliminarProductoAdmin(id){
- productosAdmin = productosAdmin.filter(function(producto){
-  return producto.id !== id;
- });
-
- localStorage.setItem("productosAdminTitan", JSON.stringify(productosAdmin));
-
- let tarjeta = document.querySelector(`[data-id-admin="${id}"]`);
- if(tarjeta){
-  tarjeta.remove();
+ try{
+  await deleteDoc(doc(db, "productos", id));
+ }catch(error){
+  console.error(error);
+  alert("No se pudo eliminar el producto");
  }
-
- renderListaAdmin();
 }
 
-function renderListaAdmin(){
+function renderListaAdmin(productos){
  let lista = document.getElementById("listaAdminProductos");
  lista.innerHTML = "";
 
- productosAdmin.forEach(function(producto){
+ productos.forEach(function(producto){
   lista.innerHTML += `
    <div class="admin-producto">
     <span>${producto.nombre} - Bs ${producto.precio}</span>
-    <button onclick="eliminarProductoAdmin(${producto.id})">X</button>
+    <button onclick="eliminarProductoAdmin('${producto.id}')">X</button>
    </div>
   `;
  });
 }
 
-cargarProductosAdmin();
+onSnapshot(collection(db, "productos"), function(snapshot){
+ document.querySelectorAll(".producto-admin").forEach(function(producto){
+  producto.remove();
+ });
 
+ let productos = [];
+
+ snapshot.forEach(function(documento){
+  let producto = {
+   id: documento.id,
+   ...documento.data()
+  };
+
+  productos.push(producto);
+  pintarProductoAdmin(documento.id, producto);
+ });
+
+ renderListaAdmin(productos);
+});
+</script>
+
+<script>
 function toggleCategorias(){
  let lista = document.getElementById("listaCategorias");
  lista.classList.toggle("abierta");
@@ -2452,6 +2486,7 @@ items.innerHTML += `
   <span>${p.nombre} x${p.cantidad} - Bs ${p.precio * p.cantidad}</span>
    <button onclick="removeItem(${i})">X</button>
 </div>
+
 `;
 });
 
