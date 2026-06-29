@@ -8,7 +8,85 @@
 <link rel="icon" type="image/png" href="imagenes\logo2.png">
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;800;900&family=Oswald:wght@500;600;700&display=swap" rel="stylesheet">
 
+
 <style>
+
+.btn-admin-flotante{
+ position:fixed;
+ bottom:90px;
+ right:20px;
+ width:54px;
+ height:54px;
+ border-radius:50%;
+ background:#131921;
+ color:#f7ca00;
+ z-index:1600;
+ font-size:22px;
+ box-shadow:0 4px 12px rgba(0,0,0,0.35);
+}
+
+.panel-admin{
+ position:fixed;
+ inset:0;
+ background:rgba(0,0,0,0.75);
+ z-index:7000;
+ display:none;
+ align-items:center;
+ justify-content:center;
+ padding:16px;
+}
+
+.admin-contenido{
+ width:100%;
+ max-width:520px;
+ max-height:92vh;
+ overflow:auto;
+ background:white;
+ border-radius:12px;
+ padding:18px;
+ color:#131921;
+}
+
+.admin-contenido h2{
+ margin-top:0;
+ font-family:'Montserrat', sans-serif;
+}
+
+.admin-contenido input,
+.admin-contenido select,
+.admin-contenido textarea{
+ width:100%;
+ padding:12px;
+ margin:7px 0;
+ border:1px solid #ccc;
+ border-radius:8px;
+ font-size:15px;
+}
+
+.admin-contenido textarea{
+ min-height:75px;
+ resize:vertical;
+}
+
+.admin-producto{
+ display:grid;
+ grid-template-columns:1fr auto;
+ gap:8px;
+ align-items:center;
+ background:#f4f6f8;
+ border-left:4px solid #f7ca00;
+ padding:10px;
+ margin-top:8px;
+ border-radius:8px;
+}
+
+.admin-producto button{
+ width:42px;
+ margin:0;
+ background:#b00020;
+ color:white;
+}
+
 .logo-carrito-panel{
  width:34px;
  height:34px;
@@ -1602,6 +1680,94 @@ border-radius:18px;
  </div>
 </div>
 
+<div class="product" data-categoria="Aros y Llantas">
+ <img src="imagenes/aro-delantero-xr150-19.jpg" onclick="verImagen(this)">
+  <h3>Aro Solo</h3>
+   <p>Aro #19 solo delantero xr150-125</p>
+  <p>Bs 250</p>
+ <div class="acciones-producto">
+  <button onclick="addCart('Aro solo #19 delantero xr150',250)">Agregar</button>
+  <button class="btn-verificar" onclick="abrirDetalle(this)">Verificar</button>
+ </div>
+</div>
+
+<div class="product" data-categoria="Aros y Llantas">
+ <img src="imagenes/aro-tarsero-17-xr150.jpg" onclick="verImagen(this)">
+  <h3>Aro Solo</h3>
+   <p>Aro #17 solo trasero xr150-125</p>
+  <p>Bs 300</p>
+ <div class="acciones-producto">
+  <button onclick="addCart('Aro solo #17 trasero xr150',300)">Agregar</button>
+  <button class="btn-verificar" onclick="abrirDetalle(this)">Verificar</button>
+ </div>
+</div>
+
+<div class="product" data-categoria="Aros y Llantas">
+ <img src="imagenes/aro-delantero-xr250-21.jpg" onclick="verImagen(this)">
+  <h3>Aro Solo</h3>
+   <p>Aro #21 solo delantero xr250-125</p>
+  <p>Bs 280</p>
+ <div class="acciones-producto">
+  <button onclick="addCart('Aro solo #21 delantero xr250',250)">Agregar</button>
+  <button class="btn-verificar" onclick="abrirDetalle(this)">Verificar</button>
+ </div>
+</div>
+
+<div class="product" data-categoria="Aros y Llantas">
+ <img src="imagenes/aro-trasero-xr250-18.jpg" onclick="verImagen(this)">
+  <h3>Aro Solo</h3>
+   <p>Aro #18 solo trasero xr250-125</p>
+  <p>Bs 250</p>
+ <div class="acciones-producto">
+  <button onclick="addCart('Aro solo #18 trasero xr250',250)">Agregar</button>
+  <button class="btn-verificar" onclick="abrirDetalle(this)">Verificar</button>
+ </div>
+</div>
+
+<div class="product" data-categoria="Aros y Llantas">
+ <img src="imagenes/rayos-de-aro-18-4mm-reforzado.jpg" onclick="verImagen(this)">
+  <h3>Rayos Aro</h3>
+   <p>Rayos de Aro #18 4mm reforzado</p>
+  <p>Bs 80</p>
+ <div class="acciones-producto">
+  <button onclick="addCart('Rayos Aro #18 4mm reforzado',80)">Agregar</button>
+  <button class="btn-verificar" onclick="abrirDetalle(this)">Verificar</button>
+ </div>
+</div>
+
+<div class="product" data-categoria="Aros y Llantas">
+ <img src="imagenes/rayos-de-aro-21.jpg" onclick="verImagen(this)">
+  <h3>Rayos Aro</h3>
+   <p>Rayos de Aro #21</p>
+  <p>Bs 55</p>
+ <div class="acciones-producto">
+  <button onclick="addCart('Rayos Aro #21',55)">Agregar</button>
+  <button class="btn-verificar" onclick="abrirDetalle(this)">Verificar</button>
+ </div>
+</div>
+
+<div class="product" data-categoria="Aros y Llantas">
+ <img src="imagenes/rayo-de-aro17-reforzado4mm.jpg" onclick="verImagen(this)">
+  <h3>Rayos Aro</h3>
+   <p>Rayos de Aro #17 4mm reforzado</p>
+  <p>Bs 80</p>
+ <div class="acciones-producto">
+  <button onclick="addCart('Rayos Aro #17 4mm reforzado',80)">Agregar</button>
+  <button class="btn-verificar" onclick="abrirDetalle(this)">Verificar</button>
+ </div>
+</div>
+
+<div class="product" data-categoria="Aros y Llantas">
+ <img src="imagenes/rayo-de-aro19-4mm.jpg" onclick="verImagen(this)">
+  <h3>Rayos Aro</h3>
+   <p>Rayos de Aro #19 4mm reforzado</p>
+  <p>Bs 80</p>
+ <div class="acciones-producto">
+  <button onclick="addCart('Rayos Aro #19 4mm reforzado',80)">Agregar</button>
+  <button class="btn-verificar" onclick="abrirDetalle(this)">Verificar</button>
+ </div>
+</div>
+
 
 <div class="product" data-categoria="Bateria">
  <img src="imagenes/bateria-honda-cb1.jpg" onclick="verImagen(this)">
@@ -2072,7 +2238,181 @@ border-radius:18px;
   <button class="cerrar-detalle" onclick="cerrarDetalle()">Volver</button>
 </div>
 
+<button class="btn-admin-flotante" onclick="abrirAdmin()">⚙</button>
+
+<div id="panelAdmin" class="panel-admin">
+ <div class="admin-contenido">
+  <h2>Panel administrador</h2>
+
+  <div id="adminLogin">
+   <input type="password" id="claveAdmin" placeholder="Contraseña de administrador">
+   <button onclick="loginAdmin()">Entrar</button>
+   <button onclick="cerrarAdmin()">Cancelar</button>
+  </div>
+
+  <div id="adminZona" style="display:none;">
+   <input id="adminNombre" placeholder="Nombre del producto">
+
+   <select id="adminCategoria">
+    <option value="aceite">Aceite</option>
+    <option value="Filtro de Aire">Filtro de aire</option>
+    <option value="Carburador">Carburadores</option>
+    <option value="Empaque">Empaques</option>
+    <option value="Bateria">Baterías</option>
+    <option value="Rodamiento">Rodamientos</option>
+    <option value="Distribucion">Distribución</option>
+    <option value="transmision">Transmisión</option>
+    <option value="Chicotillo">Chicotillo</option>
+    <option value="Embrague">Embragues</option>
+    <option value="Valvula">Válvulas</option>
+    <option value="Frenos">Frenos</option>
+    <option value="Suspensiones">Suspensiones</option>
+    <option value="Bujia">Bujías y capuchones</option>
+    <option value="Luces">Luces</option>
+    <option value="Cilindro y Biela">Cilindros y Bielas</option>
+    <option value="Aros y Llantas">Aros y Llantas</option>
+    <option value="repuestos">Repuestos</option>
+   </select>
+
+   <textarea id="adminDescripcion" placeholder="Descripción"></textarea>
+   <input id="adminPrecio" type="number" placeholder="Precio en Bs">
+   <input id="adminImagen" type="file" accept="image/*">
+
+   <button onclick="guardarProductoAdmin()">Agregar producto</button>
+   <button onclick="cerrarAdmin()">Cerrar</button>
+
+   <h3>Productos agregados por mí</h3>
+   <div id="listaAdminProductos"></div>
+  </div>
+ </div>
+</div>
+
 <script>
+
+  const CLAVE_ADMIN = "75172874";
+let productosAdmin = JSON.parse(localStorage.getItem("productosAdminTitan")) || [];
+
+function abrirAdmin(){
+ document.getElementById("panelAdmin").style.display = "flex";
+}
+
+function cerrarAdmin(){
+ document.getElementById("panelAdmin").style.display = "none";
+ document.getElementById("claveAdmin").value = "";
+}
+
+function loginAdmin(){
+ let clave = document.getElementById("claveAdmin").value;
+
+ if(clave !== CLAVE_ADMIN){
+  alert("Contraseña incorrecta");
+  return;
+ }
+
+ document.getElementById("adminLogin").style.display = "none";
+ document.getElementById("adminZona").style.display = "block";
+ renderListaAdmin();
+}
+
+function guardarProductoAdmin(){
+ let nombre = document.getElementById("adminNombre").value.trim();
+ let categoria = document.getElementById("adminCategoria").value;
+ let descripcion = document.getElementById("adminDescripcion").value.trim();
+ let precio = Number(document.getElementById("adminPrecio").value);
+ let archivo = document.getElementById("adminImagen").files[0];
+
+ if(!nombre || !descripcion || !precio || !archivo){
+  alert("Completa todos los datos del producto");
+  return;
+ }
+
+ let lector = new FileReader();
+
+ lector.onload = function(){
+  let producto = {
+   id: Date.now(),
+   nombre: nombre,
+   categoria: categoria,
+   descripcion: descripcion,
+   precio: precio,
+   imagen: lector.result
+  };
+
+  productosAdmin.push(producto);
+  localStorage.setItem("productosAdminTitan", JSON.stringify(productosAdmin));
+
+  pintarProductoAdmin(producto);
+  renderListaAdmin();
+
+  document.getElementById("adminNombre").value = "";
+  document.getElementById("adminDescripcion").value = "";
+  document.getElementById("adminPrecio").value = "";
+  document.getElementById("adminImagen").value = "";
+
+  alert("Producto agregado correctamente");
+ };
+
+ lector.readAsDataURL(archivo);
+}
+
+function pintarProductoAdmin(producto){
+ let contenedor = document.querySelector(".products");
+
+ let tarjeta = document.createElement("div");
+ tarjeta.className = "product producto-admin";
+ tarjeta.dataset.categoria = producto.categoria;
+ tarjeta.dataset.idAdmin = producto.id;
+
+ tarjeta.innerHTML = `
+  <img src="${producto.imagen}" onclick="verImagen(this)">
+  <h3>${producto.nombre}</h3>
+  <p>${producto.descripcion}</p>
+  <p>Bs ${producto.precio}</p>
+  <div class="acciones-producto">
+   <button onclick="addCart('${producto.nombre.replace(/'/g, "\\'")}', ${producto.precio})">Agregar</button>
+   <button class="btn-verificar" onclick="abrirDetalle(this)">Verificar</button>
+  </div>
+ `;
+
+ contenedor.prepend(tarjeta);
+}
+
+function cargarProductosAdmin(){
+ productosAdmin.forEach(function(producto){
+  pintarProductoAdmin(producto);
+ });
+}
+
+function eliminarProductoAdmin(id){
+ productosAdmin = productosAdmin.filter(function(producto){
+  return producto.id !== id;
+ });
+
+ localStorage.setItem("productosAdminTitan", JSON.stringify(productosAdmin));
+
+ let tarjeta = document.querySelector(`[data-id-admin="${id}"]`);
+ if(tarjeta){
+  tarjeta.remove();
+ }
+
+ renderListaAdmin();
+}
+
+function renderListaAdmin(){
+ let lista = document.getElementById("listaAdminProductos");
+ lista.innerHTML = "";
+
+ productosAdmin.forEach(function(producto){
+  lista.innerHTML += `
+   <div class="admin-producto">
+    <span>${producto.nombre} - Bs ${producto.precio}</span>
+    <button onclick="eliminarProductoAdmin(${producto.id})">X</button>
+   </div>
+  `;
+ });
+}
+
+cargarProductosAdmin();
 
 function toggleCategorias(){
  let lista = document.getElementById("listaCategorias");
