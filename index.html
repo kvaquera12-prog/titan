@@ -11,19 +11,6 @@
 
 <style>
 
-.btn-admin-flotante{
- position:fixed;
- bottom:90px;
- right:20px;
- width:54px;
- height:54px;
- border-radius:50%;
- background:#131921;
- color:#f7ca00;
- z-index:1600;
- font-size:22px;
- box-shadow:0 4px 12px rgba(0,0,0,0.35);
-}
 
 .panel-admin{
  position:fixed;
@@ -908,6 +895,11 @@ border-radius:18px;
   <img class="icono-red" src="imagenes/telefono.png" alt="Teléfono">
   72982725
 </a>
+
+<a href="#" onclick="abrirAdmin()">
+  ⚙ Panel administrador
+</a>
+
 </div>
 
 </div>
@@ -2238,7 +2230,6 @@ border-radius:18px;
   <button class="cerrar-detalle" onclick="cerrarDetalle()">Volver</button>
 </div>
 
-<button class="btn-admin-flotante" onclick="abrirAdmin()">⚙</button>
 
 <div id="panelAdmin" class="panel-admin">
  <div class="admin-contenido">
